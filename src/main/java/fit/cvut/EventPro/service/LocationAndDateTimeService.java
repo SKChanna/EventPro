@@ -50,7 +50,7 @@ public class LocationAndDateTimeService {
 
             for (DateAndTimeEntity dateAndTimeEntity: location.getDateAndTimes()) {
 
-                if (dateAndTimeEntity == null ) {
+                if (dateAndTimeEntity == null || dateAndTimeEntity.getDateAndTime() == null) {
                     throw new Exception("Date and time is required!");
                 }
 

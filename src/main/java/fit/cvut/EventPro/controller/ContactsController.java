@@ -1,5 +1,6 @@
 package fit.cvut.EventPro.controller;
 
+import fit.cvut.EventPro.dto.FilterDto;
 import fit.cvut.EventPro.entity.ContactsEntity;
 import fit.cvut.EventPro.entity.UserEntity;
 import fit.cvut.EventPro.exception.UserAlreadyExistException;
@@ -23,14 +24,14 @@ public class ContactsController {
         try {
             return ResponseEntity.ok(contactService.createNew(contacts));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Contact failed to add");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/get")
-    public ResponseEntity getAll(@RequestBody Long id) {
+    public ResponseEntity getAll(@RequestBody FilterDto filterDto) {
         try {
-            return ResponseEntity.ok(contactService.getAll(id));
+            return ResponseEntity.ok(contactService.getAll(filterDto.getId()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to get");
         }

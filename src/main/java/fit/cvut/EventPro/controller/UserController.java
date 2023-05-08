@@ -33,7 +33,7 @@ public class UserController {
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("User has not been registered.");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ public class UserController {
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("User controller failure.");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

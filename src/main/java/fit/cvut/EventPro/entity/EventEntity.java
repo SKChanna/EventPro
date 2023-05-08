@@ -21,6 +21,10 @@ public class EventEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    public EventEntity(Long id) {
+        this.id = id;
+    }
+
     public EventEntity() {
     }
 

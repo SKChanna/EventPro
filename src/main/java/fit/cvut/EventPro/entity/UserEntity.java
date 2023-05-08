@@ -32,6 +32,10 @@ public class UserEntity {
         this.contacts = contacts;
     }
 
+    public UserEntity(Long id) {
+        this.id = id;
+    }
+
     public UserEntity() {
     }
 

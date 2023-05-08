@@ -1,27 +1,36 @@
 package fit.cvut.EventPro.controller;
 
 import fit.cvut.EventPro.dto.FilterDto;
+import fit.cvut.EventPro.dto.InvitationDto;
 import fit.cvut.EventPro.entity.EventEntity;
+import fit.cvut.EventPro.entity.InvitationEntity;
 import fit.cvut.EventPro.exception.UserNotFoundException;
 import fit.cvut.EventPro.repository.EventRepo;
 import fit.cvut.EventPro.service.EventService;
+import fit.cvut.EventPro.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/event")
-public class EventController {
+@RequestMapping("/invitation")
+public class InvitationController {
 
     @Autowired
     private EventService eventService;
     @Autowired
     private EventRepo eventRepo;
 
+    @Autowired
+    private InvitationService invitationService;
+
     @PostMapping("/add")
-    public ResponseEntity add(@RequestBody EventEntity event) {
+    public ResponseEntity add(@RequestBody InvitationDto invitationDto) {
         try {
-            return ResponseEntity.ok(eventService.add(event));
+            return ResponseEntity.ok(invitationService.addMultiple(invitationDto));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -29,9 +38,9 @@ public class EventController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity update(@RequestBody EventEntity event) {
+    public ResponseEntity update(@RequestBody InvitationEntity invitationEntity) {
         try {
-            return ResponseEntity.ok(eventService.update(event));
+            return ResponseEntity.ok(invitationService.updateStatus(invitationEntity));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -41,9 +50,9 @@ public class EventController {
     @PostMapping("/get")
     public ResponseEntity getAll(@RequestBody FilterDto filterDto) {
         try {
-            return ResponseEntity.ok(eventService.getAll(filterDto.getId()));
+            return ResponseEntity.ok(invitationService.getAll(filterDto.getId()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Event controller failure.");
+            return ResponseEntity.badRequest().body("Failed to get.");
         }
     }
 }
