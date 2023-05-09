@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewRepo extends CrudRepository<ReviewEntity, Long> {
 
-    @Query("select ch from ReviewEntity ch order by ch.invitationEntity.event.id = ?1 desc")
+    @Query("select ch from ReviewEntity ch where ch.invitationEntity.event.id = ?1")
     List<ReviewEntity> byEvent(Long id);
 
 }

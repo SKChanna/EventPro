@@ -1,7 +1,7 @@
 package fit.cvut.EventPro.service.email;
 
 
-import fit.cvut.EventPro.GlobalConfiguration;
+import fit.cvut.EventPro.EmailConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -31,7 +31,7 @@ public class EmailService {
     }
 
     @Autowired
-    private GlobalConfiguration globalConfiguration;
+    private EmailConfig globalConfiguration;
 
     public void sendEmail(String to, String from, String subject, String body) throws MailException {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -54,7 +54,7 @@ public class EmailService {
         //finally send email
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom(globalConfiguration.getEmailFrom());
+        helper.setFrom(globalConfiguration.getUser());
         helper.setTo(emailTo);
         helper.setSubject("Event invitation");
         helper.setText(body, true);
