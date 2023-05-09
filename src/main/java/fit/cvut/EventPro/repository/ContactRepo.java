@@ -16,5 +16,8 @@ public interface ContactRepo extends CrudRepository<ContactsEntity, Long> {
     @Query("select ch from ContactsEntity ch where ch.user.id = ?1 order by ch.id desc")
     List<ContactsEntity> allByUserId(Long id);
 
+    @Query("select ch from ContactsEntity ch where ch.email = ?1")
+    ContactsEntity byEmail(String email);
+
 
 }

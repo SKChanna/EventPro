@@ -2,9 +2,7 @@ package fit.cvut.EventPro.controller;
 
 import fit.cvut.EventPro.dto.FilterDto;
 import fit.cvut.EventPro.dto.InvitationDto;
-import fit.cvut.EventPro.entity.EventEntity;
 import fit.cvut.EventPro.entity.InvitationEntity;
-import fit.cvut.EventPro.exception.UserNotFoundException;
 import fit.cvut.EventPro.repository.EventRepo;
 import fit.cvut.EventPro.service.EventService;
 import fit.cvut.EventPro.service.InvitationService;

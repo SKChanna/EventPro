@@ -19,6 +19,7 @@ public class ContactsController {
     @Autowired
     private ContactService contactService;
 
+    @CrossOrigin("*")
     @PostMapping("/add")
     public ResponseEntity add(@RequestBody ContactsEntity contacts) {
         try {
@@ -27,6 +28,8 @@ public class ContactsController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @CrossOrigin("*")
 
     @PostMapping("/get")
     public ResponseEntity getAll(@RequestBody FilterDto filterDto) {

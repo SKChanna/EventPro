@@ -18,6 +18,28 @@ public class InvitationEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @OneToOne
+    @JoinColumn(name = "contact_id")
+    private ContactsEntity contactsEntity;
+
+    private Boolean feedbackDone = false;
+
+    public Boolean getFeedbackDone() {
+        return feedbackDone;
+    }
+
+    public void setFeedbackDone(Boolean feedbackDone) {
+        this.feedbackDone = feedbackDone;
+    }
+
+    public ContactsEntity getContactsEntity() {
+        return contactsEntity;
+    }
+
+    public void setContactsEntity(ContactsEntity contactsEntity) {
+        this.contactsEntity = contactsEntity;
+    }
+
     public UserEntity getUser() {
         return user;
     }

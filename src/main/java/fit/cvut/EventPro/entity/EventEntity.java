@@ -3,6 +3,7 @@ package fit.cvut.EventPro.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,8 @@ public class EventEntity {
     private Long id;
     private String title;
     private String description;
+
+    private Date endDateTime;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference(value = "locations")
@@ -66,5 +69,13 @@ public class EventEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public Date getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(Date endDateTime) {
+        this.endDateTime = endDateTime;
     }
 }

@@ -56,6 +56,10 @@ public class ContactService {
         }
         contact.setUser(userEntity);
 
+        if (contactRepo.byEmail(contact.getEmail()) != null) {
+            throw new Exception("Contact with same email already exist.");
+        }
+
         if (contact.getUserContact() != null && contact.getUserContact().getId() == null) {
             UserEntity user = userRepo.byId(contact.getUserContact().getId());
 

@@ -1,12 +1,7 @@
 package fit.cvut.EventPro.service;
 
-import fit.cvut.EventPro.entity.EventEntity;
-import fit.cvut.EventPro.entity.LocationEntity;
-import fit.cvut.EventPro.entity.UserEntity;
-import fit.cvut.EventPro.repository.DateAndTimeRepo;
-import fit.cvut.EventPro.repository.EventRepo;
-import fit.cvut.EventPro.repository.LocationsRepo;
-import fit.cvut.EventPro.repository.UserRepo;
+import fit.cvut.EventPro.entity.*;
+import fit.cvut.EventPro.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +23,13 @@ public class EventService {
     private LocationsRepo locationsRepo;
     @Autowired
     private DateAndTimeRepo dateAndTimeRepo;
+
+    @Autowired
+    private InvitationRepo invitationRepo;
+
+    @Autowired
+    private ReviewRepo reviewRepo;
+
 
     public List<EventEntity> getAll(Long id) throws Exception {
         if (id == null) {
@@ -63,6 +65,7 @@ public class EventService {
         eventEntity.setTitle(event.getTitle());
         eventEntity.setDescription(event.getDescription());
         eventEntity.setUser(userEntity);
+        eventEntity.setEndDateTime(event.getEndDateTime());
         eventEntity = eventRepo.save(eventEntity);
 
         List<LocationEntity> locationEntities = event.getLocations();
@@ -88,6 +91,7 @@ public class EventService {
         EventEntity eventEntity = eventRepo.byId(event.getId());
         eventEntity.setDescription(event.getDescription());
         eventEntity.setTitle(event.getTitle());
+        eventEntity.setEndDateTime(event.getEndDateTime());
         eventEntity = eventRepo.save(eventEntity);
 
         for ( LocationEntity location : eventEntity.getLocations()) {
@@ -102,8 +106,50 @@ public class EventService {
 
         eventEntity = eventRepo.save(eventEntity);
 
+        invitationRepo.updateStatusToPendingByEvent(eventEntity.getId());
+
         return eventEntity;
 
     }
+
+    @Transactional
+    public ReviewEntity addReview(ReviewEntity review) throws Exception {
+
+        if (review.getStars() == null) {
+            throw new Exception("Stars is empty!");
+        }
+        if (review.getInvitationEntity() == null || review.getInvitationEntity().getId() == null) {
+            throw new Exception("Invitation is required!");
+        }
+
+        InvitationEntity invitation = invitationRepo.byId(review.getInvitationEntity().getId());
+
+        if (invitation == null) {
+            throw new Exception("Invitation not found with id = "+review.getInvitationEntity().getId());
+        }
+
+        invitation.setFeedbackDone(true);
+        invitation = invitationRepo.save(invitation);
+
+        review.setInvitationEntity(invitation);
+        review = reviewRepo.save(review);
+
+        return review;
+
+    }
+
+    @Transactional
+    public List<ReviewEntity> getReviewsByEvent(Long eventId) throws Exception {
+
+        if (eventId == null) {
+            throw new Exception("Event is must");
+        }
+
+        List<ReviewEntity> reviews = reviewRepo.byEvent(eventId);
+
+        return reviews;
+
+    }
+
 
 }

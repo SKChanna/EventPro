@@ -64,7 +64,8 @@ public class InvitationService {
 
         invitationEntity.setUser(userEntity);
         invitationEntity.setEvent(eventEntity);
-        invitationEntity.setStatus("Pending");
+        invitationEntity.setStatus("PENDING");
+        invitationEntity.setFeedbackDone(false);
 
         invitationEntity = invitationRepo.save(invitationEntity);
 
@@ -111,6 +112,8 @@ public class InvitationService {
         if (invitation == null) {
             throw new Exception("Invitation not found with id = "+invitation.getId());
         }
+
+        invitation.setStatus(invitationEntity.getStatus());
 
         return invitation;
 

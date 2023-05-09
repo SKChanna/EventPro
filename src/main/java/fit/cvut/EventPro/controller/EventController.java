@@ -2,7 +2,7 @@ package fit.cvut.EventPro.controller;
 
 import fit.cvut.EventPro.dto.FilterDto;
 import fit.cvut.EventPro.entity.EventEntity;
-import fit.cvut.EventPro.exception.UserNotFoundException;
+import fit.cvut.EventPro.entity.ReviewEntity;
 import fit.cvut.EventPro.repository.EventRepo;
 import fit.cvut.EventPro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +46,24 @@ public class EventController {
             return ResponseEntity.badRequest().body("Event controller failure.");
         }
     }
+
+    @PostMapping("/addReview")
+    public ResponseEntity addReview(@RequestBody ReviewEntity review) {
+        try {
+            return ResponseEntity.ok(eventService.addReview(review));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/getReviewsByEvent")
+    public ResponseEntity getReviewsByEvent(@RequestBody FilterDto filterDto) {
+        try {
+            return ResponseEntity.ok(eventService.getReviewsByEvent(filterDto.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
