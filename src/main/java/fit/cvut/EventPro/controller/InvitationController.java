@@ -8,10 +8,7 @@ import fit.cvut.EventPro.service.EventService;
 import fit.cvut.EventPro.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/invitation")
@@ -51,6 +48,22 @@ public class InvitationController {
             return ResponseEntity.ok(invitationService.getAll(filterDto.getId()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Failed to get.");
+        }
+    }
+
+    @GetMapping("/email/{id}/{status}")
+    public ResponseEntity updateStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
+        try {
+
+            InvitationEntity invitation = new InvitationEntity();
+            invitation.setId(id);
+            invitation.setStatus(status);
+            invitationService.updateStatus(invitation);
+            return ResponseEntity.ok(" Invitation "+status+" Successfully.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

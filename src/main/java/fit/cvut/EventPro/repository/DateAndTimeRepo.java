@@ -11,4 +11,9 @@ public interface DateAndTimeRepo extends CrudRepository<DateAndTimeEntity, Long>
     @Query(value = "delete from date_and_time_entity where date_and_time_entity.location=?1" , nativeQuery = true)
     void delete(Long l);
 
+    @Modifying
+    @Query("delete from DateAndTimeEntity where DateAndTimeEntity.location.event.id=?1")
+    void deleteByEvent(Long l);
+
+
 }

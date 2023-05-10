@@ -23,6 +23,10 @@ public class ContactsEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userContact;
 
+    public ContactsEntity(Long id) {
+        this.id = id;
+    }
+
     public ContactsEntity() {
     }
 
@@ -81,4 +85,5 @@ public class ContactsEntity {
     public void setUserContact(UserEntity userContact) {
         this.userContact = userContact;
     }
+
 }

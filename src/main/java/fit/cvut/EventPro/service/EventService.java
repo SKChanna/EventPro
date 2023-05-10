@@ -2,6 +2,7 @@ package fit.cvut.EventPro.service;
 
 import fit.cvut.EventPro.entity.*;
 import fit.cvut.EventPro.repository.*;
+import fit.cvut.EventPro.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,6 @@ public class EventService {
 
     @Autowired
     private ReviewRepo reviewRepo;
-
 
     public List<EventEntity> getAll(Long id) throws Exception {
         if (id == null) {
@@ -149,6 +149,24 @@ public class EventService {
 
         return reviews;
 
+    }
+
+    @Transactional
+    public Boolean deleteEvent(Long eventId) throws Exception {
+
+        if (eventId == null) {
+            throw new Exception("Event id is required!");
+        }
+
+        dateAndTimeRepo.deleteByEvent(eventId);
+        locationsRepo.delete(eventId);
+
+        reviewRepo.deleteByEvent(eventId);
+        invitationRepo.deleteByEvent(eventId);
+
+        eventRepo.deleteById(eventId);
+
+        return true;
     }
 
 

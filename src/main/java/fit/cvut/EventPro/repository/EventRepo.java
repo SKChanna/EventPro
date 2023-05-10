@@ -2,6 +2,7 @@ package fit.cvut.EventPro.repository;
 
 import fit.cvut.EventPro.entity.EventEntity;
 import fit.cvut.EventPro.entity.UserEntity;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,6 +18,10 @@ public interface EventRepo extends CrudRepository<EventEntity, Long> {
 
     @Query("select ch from EventEntity ch where ch.id = ?1")
     List<EventEntity> allByUser(Long id);
+
+    @Modifying
+    @Query("delete from EventEntity where EventEntity.id=?1")
+    void deleteById(Long l);
 
 
 }

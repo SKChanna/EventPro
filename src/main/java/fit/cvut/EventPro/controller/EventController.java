@@ -66,4 +66,13 @@ public class EventController {
         }
     }
 
+    @PostMapping("/deleteEvent")
+    public ResponseEntity deleteEvent(@RequestBody FilterDto filterDto) {
+        try {
+            return ResponseEntity.ok(eventService.deleteEvent(filterDto.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

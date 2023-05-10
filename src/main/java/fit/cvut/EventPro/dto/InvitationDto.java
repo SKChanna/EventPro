@@ -6,7 +6,7 @@ public class InvitationDto {
 
     private Long eventId;
     private List<Long> userIds;
-    private List<String> contacts;
+    private List<Long> contactIds;
 
     public Long getEventId() {
         return eventId;
@@ -24,12 +24,12 @@ public class InvitationDto {
         this.userIds = userIds;
     }
 
-    public List<String> getContacts() {
-        return contacts;
+    public List<Long> getContactIds() {
+        return contactIds;
     }
 
-    public void setContacts(List<String> contacts) {
-        this.contacts = contacts;
+    public void setContactIds(List<Long> contactIds) {
+        this.contactIds = contactIds;
     }
 }
 

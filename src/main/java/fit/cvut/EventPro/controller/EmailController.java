@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailController {
 
-    @Autowired private EmailService emailService;
+//    @Autowired private EmailService emailService;
 
     // Sending a simple Email
 //    @PostMapping("/sendMail")
