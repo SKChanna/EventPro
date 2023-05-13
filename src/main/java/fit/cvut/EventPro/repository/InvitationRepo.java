@@ -14,15 +14,18 @@ public interface InvitationRepo extends CrudRepository<InvitationEntity, Long> {
     @Query("select ch from InvitationEntity ch where ch.id = ?1")
     InvitationEntity byId(Long id);
 
-    @Query("select ch from InvitationEntity ch where ch.id = ?1")
+    @Query("select ch from InvitationEntity ch where ch.user.id = ?1 order by ch.id desc ")
     List<InvitationEntity> allByUser(Long id);
 
     @Modifying
-    @Query("UPDATE InvitationEntity SET status = 'Pending' WHERE id = ?1")
-    Boolean updateStatusToPendingByEvent(Long id);
+    @Query("UPDATE InvitationEntity ch SET ch.status = 'Pending' WHERE ch.event.id = ?1")
+    void updateStatusToPendingByEvent(Long id);
 
     @Modifying
-    @Query("delete from InvitationEntity where InvitationEntity.event.id=?1")
+    @Query(value = "delete from invitation_entity where invitation_entity.event_id=?1" , nativeQuery = true)
     void deleteByEvent(Long l);
+
+    @Query("select ch from InvitationEntity ch where ch.event.id = ?1 order by ch.id desc ")
+    List<InvitationEntity> allByEvent(Long id);
 
 }

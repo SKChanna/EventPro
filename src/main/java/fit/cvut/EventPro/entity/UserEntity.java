@@ -13,7 +13,7 @@ public class UserEntity {
     private Long id;
     private String name;
     private String surname;
-    private String numberOfOrganizedEvents;
+    private Long numberOfOrganizedEvents = 0l;
     private String username;
     private String password;
 
@@ -63,11 +63,11 @@ public class UserEntity {
         this.surname = surname;
     }
 
-    public String getNumberOfOrganizedEvents() {
+    public Long getNumberOfOrganizedEvents() {
         return numberOfOrganizedEvents;
     }
 
-    public void setNumberOfOrganizedEvents(String numberOfOrganizedEvents) {
+    public void setNumberOfOrganizedEvents(Long numberOfOrganizedEvents) {
         this.numberOfOrganizedEvents = numberOfOrganizedEvents;
     }
 

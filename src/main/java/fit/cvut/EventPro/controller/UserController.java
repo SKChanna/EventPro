@@ -58,4 +58,23 @@ public class UserController {
             return ResponseEntity.badRequest().body("Failed to get");
         }
     }
+
+    @GetMapping("/initiate")
+    public ResponseEntity initiate() {
+        try {
+            UserEntity user = new UserEntity();
+            user.setUsername("admin");
+            user.setSurname("");
+            user.setNumberOfOrganizedEvents(0l);
+            user.setName("admin");
+            user.setAdmin(true);
+            user.setPassword("123");
+
+            return ResponseEntity.ok(userService.registration(user));
+        } catch (UserAlreadyExistException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

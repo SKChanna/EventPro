@@ -16,12 +16,12 @@ public interface EventRepo extends CrudRepository<EventEntity, Long> {
     @Query("select ch from EventEntity ch where ch.id = ?1")
     EventEntity byId(Long id);
 
-    @Query("select ch from EventEntity ch where ch.id = ?1")
+    @Query("select ch from EventEntity ch where ch.user.id = ?1 order by ch.id desc")
     List<EventEntity> allByUser(Long id);
 
     @Modifying
-    @Query("delete from EventEntity where EventEntity.id=?1")
-    void deleteById(Long l);
+    @Query("delete from EventEntity ch where ch.id=?1")
+    void delete(Long l);
 
 
 }

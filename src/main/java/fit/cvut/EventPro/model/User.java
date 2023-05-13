@@ -10,7 +10,7 @@ public class User {
     private String username;
     private String name;
     private String surname;
-    private String numberOfOrganizedEvents;
+    private Long numberOfOrganizedEvents = 0l;
 
     private List<ContactsEntity> contacts;
 
@@ -64,11 +64,11 @@ public class User {
         this.surname = surname;
     }
 
-    public String getNumberOfOrganizedEvents() {
+    public Long getNumberOfOrganizedEvents() {
         return numberOfOrganizedEvents;
     }
 
-    public void setNumberOfOrganizedEvents(String numberOfOrganizedEvents) {
+    public void setNumberOfOrganizedEvents(Long numberOfOrganizedEvents) {
         this.numberOfOrganizedEvents = numberOfOrganizedEvents;
     }
 

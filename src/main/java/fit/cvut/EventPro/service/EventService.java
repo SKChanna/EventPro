@@ -60,6 +60,10 @@ public class EventService {
             throw new Exception("User not found with id = " + event.getUser().getId());
         }
 
+        userEntity.setNumberOfOrganizedEvents(userEntity.getNumberOfOrganizedEvents() + 1);
+
+        userRepo.save(userEntity);
+
         EventEntity eventEntity = new EventEntity();
 
         eventEntity.setTitle(event.getTitle());
@@ -158,13 +162,24 @@ public class EventService {
             throw new Exception("Event id is required!");
         }
 
-        dateAndTimeRepo.deleteByEvent(eventId);
-        locationsRepo.delete(eventId);
+        EventEntity eventEntity = eventRepo.byId(eventId);
 
-        reviewRepo.deleteByEvent(eventId);
-        invitationRepo.deleteByEvent(eventId);
+        if (eventEntity.getLocations() != null) {
+            for ( LocationEntity location : eventEntity.getLocations()) {
+                dateAndTimeRepo.delete(location.getId());
+            }
+            locationsRepo.delete(eventEntity.getId());
+        }
 
-        eventRepo.deleteById(eventId);
+        List<InvitationEntity> invitationEntityList = invitationRepo.allByEvent(eventEntity.getId());
+        if (invitationEntityList != null && invitationEntityList.size() > 0) {
+            for ( InvitationEntity inv : invitationEntityList) {
+                reviewRepo.deleteByInvitation(inv.getId());
+            }
+            invitationRepo.deleteByEvent(eventId);
+        }
+
+        eventRepo.delete(eventId);
 
         return true;
     }

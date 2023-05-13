@@ -48,7 +48,7 @@ public class EmailService {
         context.setVariable("content1", eventName);
         context.setVariable("content2", invitationSentBy+" has invited you, click on accept to accept invitation.");
         context.setVariable("link", globalConfiguration.getBaseUrl()+"/invitation/email/"+invitationId+"/ACCEPTED");
-        context.setVariable("link2", globalConfiguration.getBaseUrl()+"/invitation/email/"+invitationId+"/ACCEPTED");
+        context.setVariable("link2", globalConfiguration.getBaseUrl()+"/invitation/email/"+invitationId+"/REJECTED");
         //html template and pass variables to it
         String body = templateEngine.process("verification", context);
         //finally send email

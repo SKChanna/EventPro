@@ -152,4 +152,8 @@ public class InvitationService {
 
     }
 
+    public List<InvitationEntity> getInvitationList(Long id) {
+        return invitationRepo.allByEvent(id);
+    }
+
 }

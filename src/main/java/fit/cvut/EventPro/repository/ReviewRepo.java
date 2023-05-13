@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface ReviewRepo extends CrudRepository<ReviewEntity, Long> {
 
-    @Query("select ch from ReviewEntity ch where ch.invitationEntity.event.id = ?1")
+    @Query("select ch from ReviewEntity ch where ch.invitationEntity.event.id = ?1 order by ch.id desc ")
     List<ReviewEntity> byEvent(Long id);
 
     @Modifying
-    @Query("delete from ReviewEntity where ReviewEntity.invitationEntity.event.id=?1")
-    void deleteByEvent(Long l);
+    @Query(value = "delete from review_entity where review_entity.invitation_id=?1" , nativeQuery = true)
+    void deleteByInvitation(Long l);
+
 
 }

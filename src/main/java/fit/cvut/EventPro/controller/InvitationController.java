@@ -66,4 +66,14 @@ public class InvitationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/getByEvent")
+    public ResponseEntity getInvitationList(@RequestBody FilterDto filterDto) {
+        try {
+            return ResponseEntity.ok(invitationService.getInvitationList(filterDto.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to get.");
+        }
+    }
+
 }
